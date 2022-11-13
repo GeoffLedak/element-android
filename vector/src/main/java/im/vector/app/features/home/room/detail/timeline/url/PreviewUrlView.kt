@@ -20,8 +20,11 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
+import android.widget.LinearLayout
 import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import com.google.android.material.card.MaterialCardView
 import im.vector.app.R
 import im.vector.app.core.extensions.setTextOrHide
@@ -67,6 +70,13 @@ class PreviewUrlView @JvmOverloads constructor(
             imageContentRenderer: ImageContentRenderer,
             force: Boolean = false
     ) {
+
+        views.urlPreviewImage.updateLayoutParams {
+            width = LinearLayout.LayoutParams.MATCH_PARENT
+            height = LinearLayout.LayoutParams.WRAP_CONTENT
+
+        }
+
         if (newState == state && !force) {
             return
         }
@@ -88,13 +98,13 @@ class PreviewUrlView @JvmOverloads constructor(
             is TimelineMessageLayout.Default -> {
                 val backgroundColor = ThemeUtils.getColor(context, R.attr.vctr_system)
                 setCardBackgroundColor(backgroundColor)
-                val guidelineBegin = DimensionConverter(resources).dpToPx(8)
-                views.urlPreviewStartGuideline.setGuidelineBegin(guidelineBegin)
+                // val guidelineBegin = DimensionConverter(resources).dpToPx(8)
+                // views.urlPreviewStartGuideline.setGuidelineBegin(guidelineBegin)
             }
             is TimelineMessageLayout.Bubble -> {
                 setCardBackgroundColor(Color.TRANSPARENT)
                 rippleColor = ColorStateList.valueOf(Color.TRANSPARENT)
-                views.urlPreviewStartGuideline.setGuidelineBegin(0)
+                // views.urlPreviewStartGuideline.setGuidelineBegin(0)
             }
         }
     }
@@ -132,6 +142,12 @@ class PreviewUrlView @JvmOverloads constructor(
         inflate(context, R.layout.view_url_preview, this)
         views = ViewUrlPreviewBinding.bind(this)
 
+        views.urlPreviewImage.updateLayoutParams {
+            width = LinearLayout.LayoutParams.MATCH_PARENT
+            height = LinearLayout.LayoutParams.WRAP_CONTENT
+
+        }
+
         setOnClickListener(this)
         views.urlPreviewImage.setOnClickListener { onImageClick() }
         views.urlPreviewClose.setOnClickListener { onCloseClick() }
@@ -149,24 +165,61 @@ class PreviewUrlView @JvmOverloads constructor(
     private fun renderData(previewUrlData: PreviewUrlData, imageContentRenderer: ImageContentRenderer) {
         isVisible = true
 
-        views.urlPreviewTitle.setTextOrHide(previewUrlData.title)
-        views.urlPreviewImage.isVisible = imageContentRenderer.render(previewUrlData, views.urlPreviewImage)
-        views.urlPreviewDescription.setTextOrHide(previewUrlData.description)
-        views.urlPreviewDescription.maxLines = when {
-            previewUrlData.mxcUrl != null -> 2
-            previewUrlData.title != null -> 3
-            else -> 5
+        views.urlPreviewImage.updateLayoutParams {
+            width = LinearLayout.LayoutParams.MATCH_PARENT
+            height = LinearLayout.LayoutParams.WRAP_CONTENT
+
         }
-        views.urlPreviewSite.setTextOrHide(previewUrlData.siteName.takeIf { it != previewUrlData.title })
+
+        // views.urlPreviewTitle.setTextOrHide(previewUrlData.title)
+        views.urlPreviewImage.isVisible = imageContentRenderer.render(previewUrlData, views.urlPreviewImage)
+
+        Log.e("TAG", "PIZZA: width: " + views.urlPreviewImage.width + " height: " + views.urlPreviewImage.height)
+
+
+        // views.urlPreviewDescription.setTextOrHide(previewUrlData.description)
+//        views.urlPreviewDescription.maxLines = when {
+//            previewUrlData.mxcUrl != null -> 2
+//            previewUrlData.title != null -> 3
+//            else -> 5
+//        }
+        // views.urlPreviewSite.setTextOrHide(previewUrlData.siteName.takeIf { it != previewUrlData.title })
+
+
+
+        views.urlPreviewImage.updateLayoutParams {
+            width = LinearLayout.LayoutParams.MATCH_PARENT
+            height = LinearLayout.LayoutParams.WRAP_CONTENT
+
+        }
+
+
     }
 
     /**
      * Hide all views that are not visible in all state.
      */
     private fun hideAll() {
-        views.urlPreviewTitle.isVisible = false
+
+        views.urlPreviewImage.updateLayoutParams {
+            width = LinearLayout.LayoutParams.MATCH_PARENT
+            height = LinearLayout.LayoutParams.WRAP_CONTENT
+
+        }
+
+        // views.urlPreviewTitle.isVisible = false
         views.urlPreviewImage.isVisible = false
-        views.urlPreviewDescription.isVisible = false
-        views.urlPreviewSite.isVisible = false
+        // views.urlPreviewDescription.isVisible = false
+        // views.urlPreviewSite.isVisible = false
+
+
+        views.urlPreviewImage.updateLayoutParams {
+            width = LinearLayout.LayoutParams.MATCH_PARENT
+            height = LinearLayout.LayoutParams.WRAP_CONTENT
+
+        }
+
     }
+
+
 }

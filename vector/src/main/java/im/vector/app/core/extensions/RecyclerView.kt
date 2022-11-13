@@ -33,7 +33,7 @@ fun RecyclerView.configureWith(
         viewPool: RecyclerView.RecycledViewPool? = null,
         @DrawableRes
         dividerDrawable: Int? = null,
-        hasFixedSize: Boolean = true,
+        @Suppress("UNUSED_PARAMETER") hasFixedSize: Boolean = true,
         disableItemAnimation: Boolean = false
 ) {
     layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false).apply {
@@ -54,7 +54,8 @@ fun RecyclerView.configureWith(
                 }
         )
     }
-    setHasFixedSize(hasFixedSize)
+
+    setHasFixedSize(false)
     adapter = epoxyController.adapter
 }
 

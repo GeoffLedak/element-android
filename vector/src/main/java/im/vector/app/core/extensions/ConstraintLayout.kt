@@ -37,14 +37,17 @@ fun ConstraintLayout.updateConstraintSet(block: (ConstraintSet) -> Unit) {
  * instead of the viewport/ScrollView height
  */
 fun ConstraintLayout.realignPercentagesToParent() {
-    doOnLayout {
-        val rootHeight = (parent as View).height
-        children.forEach { child ->
-            val params = child.layoutParams as ConstraintLayout.LayoutParams
-            if (params.matchConstraintPercentHeight != 1.0f) {
-                params.height = (rootHeight * params.matchConstraintPercentHeight).roundToInt()
-                child.layoutParams = params
-            }
-        }
-    }
+//    doOnLayout {
+//        val rootHeight = (parent as View).height
+//        children.forEach { child ->
+//
+//            val params = child.layoutParams as ConstraintLayout.LayoutParams
+//            if (params.matchConstraintPercentHeight != 1.0f) {
+//                params.height = (rootHeight * params.matchConstraintPercentHeight).roundToInt()
+//                child.layoutParams = params
+//            }
+//
+//
+//        }
+//    }
 }
